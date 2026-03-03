@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Soal SQL Kelas 12</title>
+    <title>Generator Soal SQL Kelas 12 Informatika</title>
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -14,8 +14,9 @@
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
         .container-custom {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 2rem auto;
+            padding: 0 1rem;
         }
         .card-soal {
             background: white;
@@ -29,6 +30,10 @@
             border-radius: 16px;
             padding: 1rem;
             margin-bottom: 1.5rem;
+            border: 1px solid #e9ecef;
+        }
+        .table-data table {
+            margin-bottom: 0;
         }
         .btn-print {
             background: #0d6efd;
@@ -41,10 +46,25 @@
         .btn-print:hover {
             background: #0b5ed7;
         }
+        .rubrik-table {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            margin-top: 3rem;
+        }
         footer {
             text-align: center;
             margin-top: 3rem;
-            color: #6c757d;
+            padding: 1.5rem;
+            background: #1e293b;
+            color: white;
+            border-radius: 30px 30px 0 0;
+        }
+        .badge-theme {
+            background-color: #6610f2;
+            color: white;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -89,16 +109,16 @@
 
     <!-- Tempat soal muncul -->
     <div id="areaSoal" class="card-soal" style="display: none;">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
             <div>
                 <h3 id="namaSiswa" class="fw-bold"></h3>
                 <p id="kelasSiswa" class="text-muted"></p>
             </div>
-            <span id="temaVarian" class="badge bg-info fs-6 p-3"></span>
+            <span id="temaVarian" class="badge badge-theme fs-6 p-3"></span>
         </div>
         <hr>
 
-        <!-- Tabel-tabel -->
+        <!-- Tabel-tabel akan diisi JavaScript -->
         <div id="tabelContainer"></div>
 
         <!-- Soal SQL tetap -->
@@ -118,26 +138,92 @@
             </ol>
         </div>
 
-        <!-- Tugas Poster Canva -->
-        <div class="alert alert-warning">
-            <i class="fas fa-paint-brush me-2"></i>
-            <strong>Tugas Tambahan:</strong> Buat infografis/poster edukasi menggunakan Canva (atau gambar tangan) tentang salah satu topik: pentingnya basis data, DDL vs DML, JOIN, fungsi agregat, atau tips desain database. Kumpulkan print atau file digital.
+        <!-- Tugas Poster Canva (format rapi) -->
+        <div class="alert alert-warning d-flex align-items-start">
+            <i class="fas fa-paint-brush me-3 mt-1 fs-3"></i>
+            <div>
+                <h5 class="fw-bold">Tugas Tambahan: Infografis / Poster Edukasi</h5>
+                <p class="mb-1">Buatlah poster edukasi menggunakan <strong>Canva</strong> (atau gambar tangan) dengan ketentuan:</p>
+                <ul>
+                    <li>Pilih <strong>satu topik</strong> dari daftar berikut:
+                        <ul>
+                            <li>Pentingnya basis data dalam kehidupan sehari-hari</li>
+                            <li>Perbedaan DDL dan DML beserta contoh perintah</li>
+                            <li>Ilustrasi cara kerja JOIN (INNER, LEFT, RIGHT) dalam SQL</li>
+                            <li>Penjelasan fungsi agregat (COUNT, SUM, AVG, MIN, MAX)</li>
+                            <li>Tips merancang database yang baik (normalisasi sederhana)</li>
+                        </ul>
+                    </li>
+                    <li>Poster harus memuat: judul, penjelasan singkat, dan ilustrasi/gambar pendukung.</li>
+                    <li>Ukuran kertas A4 (boleh portrait/landscape).</li>
+                    <li>Kumpulkan dalam bentuk <strong>file PDF/JPEG</strong> (jika digital) atau print-out (jika manual).</li>
+                </ul>
+                <p class="mb-0 text-muted"><i class="fas fa-info-circle me-1"></i>Kreativitas dan kebenaran konten menjadi penilaian.</p>
+            </div>
         </div>
 
         <div class="text-center mt-4">
             <button class="btn-print" onclick="cetakPDF()"><i class="fas fa-print me-2"></i>Cetak Soal (PDF)</button>
         </div>
     </div>
+
+    <!-- Rubrik Penilaian (tidak ikut cetak) -->
+    <div class="rubrik-table mt-5">
+        <h4 class="fw-bold mb-3"><i class="fas fa-star me-2"></i>Rubrik Penilaian</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Skor Maks</th>
+                        <th>Kriteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Struktur Tabel (DDL)</td>
+                        <td>20</td>
+                        <td>Ketepatan primary key, foreign key, tipe data, dan kelengkapan tabel.</td>
+                    </tr>
+                    <tr>
+                        <td>Query DML (INSERT, UPDATE, DELETE)</td>
+                        <td>20</td>
+                        <td>Kebenaran sintaks dan kesesuaian dengan data dummy.</td>
+                    </tr>
+                    <tr>
+                        <td>Query SELECT (dasar, JOIN, agregat)</td>
+                        <td>30</td>
+                        <td>Kebenaran logika, penggunaan JOIN, GROUP BY, fungsi agregat, WHERE.</td>
+                    </tr>
+                    <tr>
+                        <td>Poster/Infografis Edukasi</td>
+                        <td>20</td>
+                        <td>Kreativitas, kesesuaian topik, kebenaran konten, estetika desain (Canva/gambar tangan).</td>
+                    </tr>
+                    <tr>
+                        <td>Kerapian & Ketepatan Waktu</td>
+                        <td>10</td>
+                        <td>Tulisan rapi, mudah dibaca, dikumpulkan tepat waktu.</td>
+                    </tr>
+                    <tr class="table-primary">
+                        <th>Total</th>
+                        <th>100</th>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <footer>
-    <p>© Guru Basis Data – SMAK St. Louis 1</p>
+    <p class="mb-0">© Guru Informatika – SMAK Petra 3</p>
 </footer>
 
 <script>
-    // ================= DATA SISWA =================
-    const siswa = [
-        // Kelas 1 (0-21)
+    // ================= DATA SISWA (15 per kelas, total 45) =================
+    const siswaList = [
+        // XII Informatika 1 (0-14)
         { nama: "ENLAY COEPUTRA", kelas: "XII Informatika 1" },
         { nama: "FELICIA ANGEL SIADA", kelas: "XII Informatika 1" },
         { nama: "GABRIEL JUSTIN KRISNAWAN", kelas: "XII Informatika 1" },
@@ -153,14 +239,7 @@
         { nama: "GABRIEL ALEXA NYOTO", kelas: "XII Informatika 1" },
         { nama: "HAWILA RESTU WIGUSTI", kelas: "XII Informatika 1" },
         { nama: "ARFIN", kelas: "XII Informatika 1" },
-        { nama: "CINDY OCTAVIONA MINTARJO", kelas: "XII Informatika 1" },
-        { nama: "CLAWDYA GABRIELLA KRISTANTO", kelas: "XII Informatika 1" },
-        { nama: "JENNIFER SETIO", kelas: "XII Informatika 1" },
-        { nama: "JOSEPHINE SERRIN", kelas: "XII Informatika 1" },
-        { nama: "KENZA MATTHEW THEODORRUS", kelas: "XII Informatika 1" },
-        { nama: "MUHAMMAD KIRAN NOOR", kelas: "XII Informatika 1" },
-        { nama: "REKU DAVIDA", kelas: "XII Informatika 1" },
-        // Kelas 2 (22-43)
+        // XII Informatika 2 (15-29)
         { nama: "DANIEL ANGELO TJANDRA", kelas: "XII Informatika 2" },
         { nama: "DELICIA CLAIRINE DIHARDJA", kelas: "XII Informatika 2" },
         { nama: "EDWARD FREDERICK JO", kelas: "XII Informatika 2" },
@@ -176,39 +255,28 @@
         { nama: "IVAN REINARD JOAKIMA", kelas: "XII Informatika 2" },
         { nama: "JASON LOUISE FERNANDO", kelas: "XII Informatika 2" },
         { nama: "SOPHY ANGELINE KUSUMA", kelas: "XII Informatika 2" },
-        { nama: "CHRISTHOPER BRYANT SANTOSO", kelas: "XII Informatika 2" },
-        { nama: "GABRIELLA JASMINE HARSONO", kelas: "XII Informatika 2" },
-        { nama: "GILBERT GLORIUS GUNAWAN", kelas: "XII Informatika 2" },
-        { nama: "IVANA PRICILLA G.", kelas: "XII Informatika 2" },
-        { nama: "JOSAFAT CHRISTIAN PANG", kelas: "XII Informatika 2" },
-        { nama: "SHERAVEEN OENTIANTO", kelas: "XII Informatika 2" },
-        { nama: "VINCENT VALENTINO TJUATJADJAJA", kelas: "XII Informatika 2" },
-        { nama: "VIRGINIA HONEST T.", kelas: "XII Informatika 2" },
-        // Kelas 3 (44-61) – seharusnya 45 siswa total, kita punya 22+23? Mari hitung: kelas1:22, kelas2:22, kelas3:22? total 66? Tidak, daftar asli 45. Saya akan sesuaikan dengan daftar yang diberikan. Sebenarnya daftar di atas sudah 45? Mari kita hitung: kelas1 sampai REKU DAVIDA itu 22? Cek: 1-22 = 22 siswa, kelas2 dari DANIEL sampai VIRGINIA = 22 siswa? Itu 44, lalu kelas3 seharusnya 1 siswa? Tidak. Daftar asli: kelas1: 22 nama, kelas2: 23 nama, kelas3: 20? Saya akan gunakan daftar persis dari teks sebelumnya. Agar tidak salah, saya ambil dari daftar yang sudah diberikan user (45 nama). Saya akan tulis ulang dengan benar.
+        // XII Informatika 3 (30-44)
+        { nama: "ANDREW HARTANTO SOELISTYO", kelas: "XII Informatika 3" },
+        { nama: "DEVON IMANUEL S.", kelas: "XII Informatika 3" },
+        { nama: "FELICIA CLARISSA NOTO", kelas: "XII Informatika 3" },
+        { nama: "FLORIN EZEQUIELL T.", kelas: "XII Informatika 3" },
+        { nama: "LOVELY FENDIANTO", kelas: "XII Informatika 3" },
+        { nama: "NELSON IVAN LATIEF", kelas: "XII Informatika 3" },
+        { nama: "OWEN RICARDO LAU", kelas: "XII Informatika 3" },
+        { nama: "SELENA EVELYN S.", kelas: "XII Informatika 3" },
+        { nama: "TIRZA CHARISYA W.", kelas: "XII Informatika 3" },
+        { nama: "ANGELYN IGNACIA WIJAYA", kelas: "XII Informatika 3" },
+        { nama: "KENT WELLINGTON KAAWOAN", kelas: "XII Informatika 3" },
+        { nama: "SHEENA LEWISANTOSO", kelas: "XII Informatika 3" },
+        { nama: "CALISTA CHRISTIE", kelas: "XII Informatika 3" },
+        { nama: "DANIEL JOEY ANGGONO", kelas: "XII Informatika 3" },
+        { nama: "DEVEN GERALDO", kelas: "XII Informatika 3" }
     ];
 
-    // Perbaiki data siswa agar tepat 45 sesuai daftar
-    const siswaFix = [
-        // XII Informatika 1 (22 siswa)
-        "ENLAY COEPUTRA","FELICIA ANGEL SIADA","GABRIEL JUSTIN KRISNAWAN","GAMALIEL PANJAITAN","INTAN GRACE EFENDI","SAMANTHA LIBBY CLEOVEA","STECEY PURNATA","AVERINA JOLENE KURNIAWAN","CATHERINE JOHANNA","CLARISSA FLORENTINE PRATOMO","EFRAIM RAHADYANTA","EZRA AZAEL SANTOSA","GABRIEL ALEXA NYOTO","HAWILA RESTU WIGUSTI","ARFIN","CINDY OCTAVIONA MINTARJO","CLAWDYA GABRIELLA KRISTANTO","JENNIFER SETIO","JOSEPHINE SERRIN","KENZA MATTHEW THEODORRUS","MUHAMMAD KIRAN NOOR","REKU DAVIDA",
-        // XII Informatika 2 (23 siswa)
-        "DANIEL ANGELO TJANDRA","DELICIA CLAIRINE DIHARDJA","EDWARD FREDERICK JO","JASON IMMANUEL SOEWANTO","MARVELLE MAXIMILLIAN W.","REAGEN WIJAYA","CALVIN CHRISTOPER","ELLENA CATHERINE WIJAYA","FELICE HALIM","FIDELIA AVERINA TRISTAN","GISELLA EVELYNE","GLENN KIRBY LIKORAWUNG","IVAN REINARD JOAKIMA","JASON LOUISE FERNANDO","SOPHY ANGELINE KUSUMA","CHRISTHOPER BRYANT SANTOSO","GABRIELLA JASMINE HARSONO","GILBERT GLORIUS GUNAWAN","IVANA PRICILLA G.","JOSAFAT CHRISTIAN PANG","SHERAVEEN OENTIANTO","VINCENT VALENTINO TJUATJADJAJA","VIRGINIA HONEST T.",
-        // XII Informatika 3 (20 siswa)
-        "ANDREW HARTANTO SOELISTYO","DEVON IMANUEL S.","FELICIA CLARISSA NOTO","FLORIN EZEQUIELL T.","LOVELY FENDIANTO","NELSON IVAN LATIEF","OWEN RICARDO LAU","SELENA EVELYN S.","TIRZA CHARISYA W.","ANGELYN IGNACIA WIJAYA","KENT WELLINGTON KAAWOAN","SHEENA LEWISANTOSO","CALISTA CHRISTIE","DANIEL JOEY ANGGONO","DEVEN GERALDO","KATHLEEN ANGELICA V.G","MICHAEL ANDREANI","NG.CALVIN SEBASTIAN"
-    ];
-    // Buat array siswa dengan kelas
-    const siswaList = [];
-    siswaFix.forEach((nama, idx) => {
-        if (idx < 22) siswaList.push({ nama, kelas: "XII Informatika 1" });
-        else if (idx < 45) siswaList.push({ nama, kelas: "XII Informatika 2" });
-        else siswaList.push({ nama, kelas: "XII Informatika 3" });
-    });
-    // Pastikan 45
-    console.log(siswaList.length);
-
-    // ================= 15 TEMA + 3 VARIAN =================
+    // ================= 15 TEMA LENGKAP DENGAN 3 VARIAN =================
     const themes = [
-        { // 1 Toko Buku
+        // 1 Toko Buku
+        {
             name: "Toko Buku",
             tables: [
                 { name: "Buku", fields: ["id_buku (varchar PK)", "judul (varchar)", "pengarang (varchar)", "harga (int)", "stok (int)", "id_kategori (varchar FK)"] },
@@ -216,24 +284,25 @@
                 { name: "Penjualan", fields: ["id_jual (varchar PK)", "id_buku (varchar FK)", "jumlah (int)", "tgl_jual (date)"] }
             ],
             variants: [
-                { // A
+                {
                     Buku: [ ["B001","Pemrograman Dasar","Andi",75000,10,"K1"], ["B002","Novel Remaja","Dewi",50000,5,"K2"], ["B003","Komik Petualangan","Rudi",30000,8,"K2"] ],
                     Kategori: [ ["K1","Pendidikan"], ["K2","Fiksi"], ["K3","Komik"] ],
                     Penjualan: [ ["J001","B001",2,"2025-03-01"], ["J002","B002",1,"2025-03-02"], ["J003","B003",3,"2025-03-03"] ]
                 },
-                { // B
+                {
                     Buku: [ ["B004","Sejarah Dunia","Ahmad",80000,7,"K4"], ["B005","Biografi Tokoh","Siti",60000,4,"K4"], ["B006","Ensiklopedia","Budi",120000,3,"K5"] ],
                     Kategori: [ ["K4","Nonfiksi"], ["K5","Referensi"], ["K6","Biografi"] ],
                     Penjualan: [ ["J004","B004",2,"2025-03-05"], ["J005","B005",1,"2025-03-06"], ["J006","B006",1,"2025-03-07"] ]
                 },
-                { // C
+                {
                     Buku: [ ["B007","Komik Naruto","Masashi",35000,15,"K7"], ["B008","Majalah Bobo","Redaksi",25000,20,"K8"], ["B009","Tabloid Bola","Sport",15000,12,"K8"] ],
                     Kategori: [ ["K7","Hiburan"], ["K8","Berita"], ["K9","Anak-anak"] ],
                     Penjualan: [ ["J007","B007",4,"2025-03-10"], ["J008","B008",2,"2025-03-11"], ["J009","B009",3,"2025-03-12"] ]
                 }
             ]
         },
-        { // 2 Apotek
+        // 2 Apotek
+        {
             name: "Apotek",
             tables: [
                 { name: "Obat", fields: ["id_obat (varchar PK)", "nama_obat (varchar)", "jenis (varchar)", "harga (int)", "stok (int)", "id_suplier (varchar FK)"] },
@@ -241,17 +310,17 @@
                 { name: "Pembelian", fields: ["id_beli (varchar PK)", "id_obat (varchar FK)", "jumlah (int)", "tgl_beli (date)"] }
             ],
             variants: [
-                { // A
+                {
                     Obat: [ ["O01","Paracetamol","Tablet",5000,100,"S1"], ["O02","Amoxilin","Kapsul",15000,50,"S1"], ["O03","Vitamin C","Tablet",10000,200,"S2"] ],
                     Suplier: [ ["S1","PT Farma Sehat","021-5551234"], ["S2","CV Medika Jaya","022-5555678"] ],
                     Pembelian: [ ["P001","O01",50,"2025-03-02"], ["P002","O02",20,"2025-03-03"], ["P003","O03",100,"2025-03-04"] ]
                 },
-                { // B
+                {
                     Obat: [ ["O04","Antalgin","Tablet",4000,150,"S3"], ["O05","CTM","Tablet",2000,300,"S3"], ["O06","Deksametason","Tablet",8000,80,"S4"] ],
                     Suplier: [ ["S3","PT Medika Prima","021-5559876"], ["S4","UD Obat Keluarga","024-5554321"] ],
                     Pembelian: [ ["P004","O04",100,"2025-03-06"], ["P005","O05",200,"2025-03-07"], ["P006","O06",40,"2025-03-08"] ]
                 },
-                { // C
+                {
                     Obat: [ ["O07","Promag","Tablet",7000,120,"S5"], ["O08","Mylanta","Cair",25000,30,"S5"], ["O09","Polysilane","Suspensi",20000,40,"S6"] ],
                     Suplier: [ ["S5","PT Pharma Indah","021-5551111"], ["S6","CV Obat Ampuh","031-5552222"] ],
                     Pembelian: [ ["P007","O07",60,"2025-03-15"], ["P008","O08",15,"2025-03-16"], ["P009","O09",20,"2025-03-17"] ]
@@ -259,251 +328,342 @@
             ]
         },
         // 3 Rental Mobil
-        { name: "Rental Mobil",
-          tables: [
-            { name: "Mobil", fields: ["id_mobil (varchar PK)","plat (varchar)","merk (varchar)","tahun (int)","harga_sewa (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_mobil (varchar FK)","lama_hari (int)","tgl_sewa (date)"] }
-          ],
-          variants: [
-            { Mobil: [ ["M01A","B 1234 CD","Toyota Avanza",2020,350000,"K1"], ["M02A","D 5678 EF","Honda Jazz",2019,400000,"K2"], ["M03A","F 9101 GH","Suzuki Ertiga",2021,375000,"K1"] ],
-              Kategori: [ ["K1","MPV"], ["K2","Hatchback"] ],
-              Transaksi: [ ["T01A","M01A",2,"2025-03-01"], ["T02A","M02A",1,"2025-03-02"] ] },
-            { Mobil: [ ["M01B","B 9876 JK","Toyota Fortuner",2022,600000,"K3"], ["M02B","D 5432 LM","Mitsubishi Pajero",2021,650000,"K3"], ["M03B","F 1357 NO","Honda CRV",2020,550000,"K4"] ],
-              Kategori: [ ["K3","SUV"], ["K4","Crossover"] ],
-              Transaksi: [ ["T01B","M01B",3,"2025-03-05"], ["T02B","M02B",2,"2025-03-06"] ] },
-            { Mobil: [ ["M01C","B 1122 PQ","Daihatsu Xenia",2020,300000,"K1"], ["M02C","D 3344 RS","Toyota Innova",2021,450000,"K1"], ["M03C","F 5566 TU","Wuling Confero",2022,350000,"K5"] ],
-              Kategori: [ ["K1","MPV"], ["K5","LCGC"] ],
-              Transaksi: [ ["T01C","M01C",2,"2025-03-10"], ["T02C","M02C",1,"2025-03-11"] ] }
-          ]
+        {
+            name: "Rental Mobil",
+            tables: [
+                { name: "Mobil", fields: ["id_mobil (varchar PK)","plat (varchar)","merk (varchar)","tahun (int)","harga_sewa (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_mobil (varchar FK)","lama_hari (int)","tgl_sewa (date)"] }
+            ],
+            variants: [
+                {
+                    Mobil: [ ["M01A","B 1234 CD","Toyota Avanza",2020,350000,"K1"], ["M02A","D 5678 EF","Honda Jazz",2019,400000,"K2"], ["M03A","F 9101 GH","Suzuki Ertiga",2021,375000,"K1"] ],
+                    Kategori: [ ["K1","MPV"], ["K2","Hatchback"] ],
+                    Transaksi: [ ["T01A","M01A",2,"2025-03-01"], ["T02A","M02A",1,"2025-03-02"] ]
+                },
+                {
+                    Mobil: [ ["M01B","B 9876 JK","Toyota Fortuner",2022,600000,"K3"], ["M02B","D 5432 LM","Mitsubishi Pajero",2021,650000,"K3"], ["M03B","F 1357 NO","Honda CRV",2020,550000,"K4"] ],
+                    Kategori: [ ["K3","SUV"], ["K4","Crossover"] ],
+                    Transaksi: [ ["T01B","M01B",3,"2025-03-05"], ["T02B","M02B",2,"2025-03-06"] ]
+                },
+                {
+                    Mobil: [ ["M01C","B 1122 PQ","Daihatsu Xenia",2020,300000,"K1"], ["M02C","D 3344 RS","Toyota Innova",2021,450000,"K1"], ["M03C","F 5566 TU","Wuling Confero",2022,350000,"K5"] ],
+                    Kategori: [ ["K1","MPV"], ["K5","LCGC"] ],
+                    Transaksi: [ ["T01C","M01C",2,"2025-03-10"], ["T02C","M02C",1,"2025-03-11"] ]
+                }
+            ]
         },
         // 4 Laundry
-        { name: "Laundry",
-          tables: [
-            { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga_per_kg (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_layanan (varchar FK)","berat (int)","tgl_masuk (date)"] }
-          ],
-          variants: [
-            { Layanan: [ ["L01A","Cuci Kering",5000,"K1"], ["L02A","Setrika",3000,"K1"], ["L03A","Cuci+Setrika",7000,"K2"] ],
-              Kategori: [ ["K1","Reguler"], ["K2","Express"] ],
-              Transaksi: [ ["T01A","L01A",5,"2025-03-01"], ["T02A","L03A",3,"2025-03-02"] ] },
-            { Layanan: [ ["L01B","Cuci Sepatu",15000,"K3"], ["L02B","Cuci Bed Cover",25000,"K4"], ["L03B","Cuci Boneka",20000,"K3"] ],
-              Kategori: [ ["K3","Spesial"], ["K4","Selimut"] ],
-              Transaksi: [ ["T01B","L01B",2,"2025-03-05"], ["T02B","L02B",1,"2025-03-06"] ] },
-            { Layanan: [ ["L01C","Cuci Karpet",30000,"K5"], ["L02C","Cuci Jas",40000,"K6"], ["L03C","Cuci Kain",10000,"K5"] ],
-              Kategori: [ ["K5","Besar"], ["K6","Premium"] ],
-              Transaksi: [ ["T01C","L01C",1,"2025-03-10"], ["T02C","L02C",1,"2025-03-11"] ] }
-          ]
+        {
+            name: "Laundry",
+            tables: [
+                { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga_per_kg (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_layanan (varchar FK)","berat (int)","tgl_masuk (date)"] }
+            ],
+            variants: [
+                {
+                    Layanan: [ ["L01A","Cuci Kering",5000,"K1"], ["L02A","Setrika",3000,"K1"], ["L03A","Cuci+Setrika",7000,"K2"] ],
+                    Kategori: [ ["K1","Reguler"], ["K2","Express"] ],
+                    Transaksi: [ ["T01A","L01A",5,"2025-03-01"], ["T02A","L03A",3,"2025-03-02"] ]
+                },
+                {
+                    Layanan: [ ["L01B","Cuci Sepatu",15000,"K3"], ["L02B","Cuci Bed Cover",25000,"K4"], ["L03B","Cuci Boneka",20000,"K3"] ],
+                    Kategori: [ ["K3","Spesial"], ["K4","Selimut"] ],
+                    Transaksi: [ ["T01B","L01B",2,"2025-03-05"], ["T02B","L02B",1,"2025-03-06"] ]
+                },
+                {
+                    Layanan: [ ["L01C","Cuci Karpet",30000,"K5"], ["L02C","Cuci Jas",40000,"K6"], ["L03C","Cuci Kain",10000,"K5"] ],
+                    Kategori: [ ["K5","Besar"], ["K6","Premium"] ],
+                    Transaksi: [ ["T01C","L01C",1,"2025-03-10"], ["T02C","L02C",1,"2025-03-11"] ]
+                }
+            ]
         },
         // 5 Kafe
-        { name: "Kafe",
-          tables: [
-            { name: "Menu", fields: ["id_menu (varchar PK)","nama_menu (varchar)","harga (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Pesanan", fields: ["id_pesanan (varchar PK)","id_menu (varchar FK)","jumlah (int)","tgl_pesan (date)"] }
-          ],
-          variants: [
-            { Menu: [ ["M01A","Kopi Hitam",15000,"K1"], ["M02A","Teh Tarik",12000,"K1"], ["M03A","Roti Bakar",20000,"K2"] ],
-              Kategori: [ ["K1","Minuman"], ["K2","Makanan"] ],
-              Pesanan: [ ["P01A","M01A",2,"2025-03-01"], ["P02A","M03A",1,"2025-03-02"] ] },
-            { Menu: [ ["M01B","Nasi Goreng",25000,"K3"], ["M02B","Mie Goreng",20000,"K3"], ["M03B","Jus Alpukat",18000,"K4"] ],
-              Kategori: [ ["K3","Makanan Berat"], ["K4","Minuman Segar"] ],
-              Pesanan: [ ["P01B","M01B",2,"2025-03-05"], ["P02B","M03B",3,"2025-03-06"] ] },
-            { Menu: [ ["M01C","Steak",50000,"K5"], ["M02C","Salad",25000,"K6"], ["M03C","Smoothie",22000,"K5"] ],
-              Kategori: [ ["K5","Western"], ["K6","Healthy"] ],
-              Pesanan: [ ["P01C","M01C",1,"2025-03-10"], ["P02C","M02C",2,"2025-03-11"] ] }
-          ]
+        {
+            name: "Kafe",
+            tables: [
+                { name: "Menu", fields: ["id_menu (varchar PK)","nama_menu (varchar)","harga (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Pesanan", fields: ["id_pesanan (varchar PK)","id_menu (varchar FK)","jumlah (int)","tgl_pesan (date)"] }
+            ],
+            variants: [
+                {
+                    Menu: [ ["M01A","Kopi Hitam",15000,"K1"], ["M02A","Teh Tarik",12000,"K1"], ["M03A","Roti Bakar",20000,"K2"] ],
+                    Kategori: [ ["K1","Minuman"], ["K2","Makanan"] ],
+                    Pesanan: [ ["P01A","M01A",2,"2025-03-01"], ["P02A","M03A",1,"2025-03-02"] ]
+                },
+                {
+                    Menu: [ ["M01B","Nasi Goreng",25000,"K3"], ["M02B","Mie Goreng",20000,"K3"], ["M03B","Jus Alpukat",18000,"K4"] ],
+                    Kategori: [ ["K3","Makanan Berat"], ["K4","Minuman Segar"] ],
+                    Pesanan: [ ["P01B","M01B",2,"2025-03-05"], ["P02B","M03B",3,"2025-03-06"] ]
+                },
+                {
+                    Menu: [ ["M01C","Steak",50000,"K5"], ["M02C","Salad",25000,"K6"], ["M03C","Smoothie",22000,"K5"] ],
+                    Kategori: [ ["K5","Western"], ["K6","Healthy"] ],
+                    Pesanan: [ ["P01C","M01C",1,"2025-03-10"], ["P02C","M02C",2,"2025-03-11"] ]
+                }
+            ]
         },
         // 6 Salon
-        { name: "Salon",
-          tables: [
-            { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_layanan (varchar FK)","jumlah (int)","tgl_transaksi (date)"] }
-          ],
-          variants: [
-            { Layanan: [ ["L01A","Potong Rambut",30000,"K1"], ["L02A","Creambath",50000,"K2"], ["L03A","Facial",75000,"K2"] ],
-              Kategori: [ ["K1","Dasar"], ["K2","Perawatan"] ],
-              Transaksi: [ ["T01A","L01A",1,"2025-03-01"], ["T02A","L02A",1,"2025-03-02"] ] },
-            { Layanan: [ ["L01B","Manicure",40000,"K3"], ["L02B","Pedicure",45000,"K3"], ["L03B","Waxing",60000,"K4"] ],
-              Kategori: [ ["K3","Kuku"], ["K4","Hair Removal"] ],
-              Transaksi: [ ["T01B","L01B",1,"2025-03-05"], ["T02B","L03B",1,"2025-03-06"] ] },
-            { Layanan: [ ["L01C","Cat Rambut",150000,"K5"], ["L02C","Rebonding",200000,"K5"], ["L03C","Smoothing",180000,"K6"] ],
-              Kategori: [ ["K5","Rambut"], ["K6","Treatment"] ],
-              Transaksi: [ ["T01C","L01C",1,"2025-03-10"], ["T02C","L02C",1,"2025-03-11"] ] }
-          ]
+        {
+            name: "Salon",
+            tables: [
+                { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Transaksi", fields: ["id_transaksi (varchar PK)","id_layanan (varchar FK)","jumlah (int)","tgl_transaksi (date)"] }
+            ],
+            variants: [
+                {
+                    Layanan: [ ["L01A","Potong Rambut",30000,"K1"], ["L02A","Creambath",50000,"K2"], ["L03A","Facial",75000,"K2"] ],
+                    Kategori: [ ["K1","Dasar"], ["K2","Perawatan"] ],
+                    Transaksi: [ ["T01A","L01A",1,"2025-03-01"], ["T02A","L02A",1,"2025-03-02"] ]
+                },
+                {
+                    Layanan: [ ["L01B","Manicure",40000,"K3"], ["L02B","Pedicure",45000,"K3"], ["L03B","Waxing",60000,"K4"] ],
+                    Kategori: [ ["K3","Kuku"], ["K4","Hair Removal"] ],
+                    Transaksi: [ ["T01B","L01B",1,"2025-03-05"], ["T02B","L03B",1,"2025-03-06"] ]
+                },
+                {
+                    Layanan: [ ["L01C","Cat Rambut",150000,"K5"], ["L02C","Rebonding",200000,"K5"], ["L03C","Smoothing",180000,"K6"] ],
+                    Kategori: [ ["K5","Rambut"], ["K6","Treatment"] ],
+                    Transaksi: [ ["T01C","L01C",1,"2025-03-10"], ["T02C","L02C",1,"2025-03-11"] ]
+                }
+            ]
         },
         // 7 Bengkel
-        { name: "Bengkel",
-          tables: [
-            { name: "Sparepart", fields: ["id_sparepart (varchar PK)","nama_sparepart (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Servis", fields: ["id_servis (varchar PK)","id_sparepart (varchar FK)","jumlah (int)","tgl_servis (date)"] }
-          ],
-          variants: [
-            { Sparepart: [ ["S01A","Oli",50000,20,"K1"], ["S02A","Ban",300000,5,"K2"], ["S03A","Busi",20000,15,"K1"] ],
-              Kategori: [ ["K1","Konsumsi"], ["K2","Suku Cadang"] ],
-              Servis: [ ["R01A","S01A",2,"2025-03-01"], ["R02A","S02A",1,"2025-03-02"] ] },
-            { Sparepart: [ ["S01B","Kampas Rem",80000,10,"K3"], ["S02B","Filter Udara",50000,8,"K3"], ["S03B","Aki",400000,3,"K4"] ],
-              Kategori: [ ["K3","Rem"], ["K4","Kelistrikan"] ],
-              Servis: [ ["R01B","S01B",1,"2025-03-05"], ["R02B","S03B",1,"2025-03-06"] ] },
-            { Sparepart: [ ["S01C","Lampu",75000,12,"K5"], ["S02C","Kabel",20000,25,"K5"], ["S03C","Sekring",5000,50,"K6"] ],
-              Kategori: [ ["K5","Penerangan"], ["K6","Kelistrikan"] ],
-              Servis: [ ["R01C","S01C",2,"2025-03-10"], ["R02C","S02C",3,"2025-03-11"] ] }
-          ]
+        {
+            name: "Bengkel",
+            tables: [
+                { name: "Sparepart", fields: ["id_sparepart (varchar PK)","nama_sparepart (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Servis", fields: ["id_servis (varchar PK)","id_sparepart (varchar FK)","jumlah (int)","tgl_servis (date)"] }
+            ],
+            variants: [
+                {
+                    Sparepart: [ ["S01A","Oli",50000,20,"K1"], ["S02A","Ban",300000,5,"K2"], ["S03A","Busi",20000,15,"K1"] ],
+                    Kategori: [ ["K1","Konsumsi"], ["K2","Suku Cadang"] ],
+                    Servis: [ ["R01A","S01A",2,"2025-03-01"], ["R02A","S02A",1,"2025-03-02"] ]
+                },
+                {
+                    Sparepart: [ ["S01B","Kampas Rem",80000,10,"K3"], ["S02B","Filter Udara",50000,8,"K3"], ["S03B","Aki",400000,3,"K4"] ],
+                    Kategori: [ ["K3","Rem"], ["K4","Kelistrikan"] ],
+                    Servis: [ ["R01B","S01B",1,"2025-03-05"], ["R02B","S03B",1,"2025-03-06"] ]
+                },
+                {
+                    Sparepart: [ ["S01C","Lampu",75000,12,"K5"], ["S02C","Kabel",20000,25,"K5"], ["S03C","Sekring",5000,50,"K6"] ],
+                    Kategori: [ ["K5","Penerangan"], ["K6","Kelistrikan"] ],
+                    Servis: [ ["R01C","S01C",2,"2025-03-10"], ["R02C","S02C",3,"2025-03-11"] ]
+                }
+            ]
         },
         // 8 Toko Pakaian
-        { name: "Toko Pakaian",
-          tables: [
-            { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_produk (varchar FK)","jumlah (int)","tgl_jual (date)"] }
-          ],
-          variants: [
-            { Produk: [ ["P01A","Kemeja",150000,10,"K1"], ["P02A","Celana",200000,8,"K1"], ["P03A","Jaket",250000,5,"K2"] ],
-              Kategori: [ ["K1","Pria"], ["K2","Wanita"] ],
-              Penjualan: [ ["J01A","P01A",2,"2025-03-01"], ["J02A","P02A",1,"2025-03-02"] ] },
-            { Produk: [ ["P01B","Dress",180000,7,"K3"], ["P02B","Rok",120000,10,"K3"], ["P03B","Blus",140000,8,"K4"] ],
-              Kategori: [ ["K3","Wanita"], ["K4","Muslim"] ],
-              Penjualan: [ ["J01B","P01B",2,"2025-03-05"], ["J02B","P02B",3,"2025-03-06"] ] },
-            { Produk: [ ["P01C","Kaos",80000,15,"K5"], ["P02C","Sweater",180000,6,"K6"], ["P03C","Hoodie",200000,4,"K5"] ],
-              Kategori: [ ["K5","Casual"], ["K6","Hangat"] ],
-              Penjualan: [ ["J01C","P01C",5,"2025-03-10"], ["J02C","P02C",2,"2025-03-11"] ] }
-          ]
+        {
+            name: "Toko Pakaian",
+            tables: [
+                { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_produk (varchar FK)","jumlah (int)","tgl_jual (date)"] }
+            ],
+            variants: [
+                {
+                    Produk: [ ["P01A","Kemeja",150000,10,"K1"], ["P02A","Celana",200000,8,"K1"], ["P03A","Jaket",250000,5,"K2"] ],
+                    Kategori: [ ["K1","Pria"], ["K2","Wanita"] ],
+                    Penjualan: [ ["J01A","P01A",2,"2025-03-01"], ["J02A","P02A",1,"2025-03-02"] ]
+                },
+                {
+                    Produk: [ ["P01B","Dress",180000,7,"K3"], ["P02B","Rok",120000,10,"K3"], ["P03B","Blus",140000,8,"K4"] ],
+                    Kategori: [ ["K3","Wanita"], ["K4","Muslim"] ],
+                    Penjualan: [ ["J01B","P01B",2,"2025-03-05"], ["J02B","P02B",3,"2025-03-06"] ]
+                },
+                {
+                    Produk: [ ["P01C","Kaos",80000,15,"K5"], ["P02C","Sweater",180000,6,"K6"], ["P03C","Hoodie",200000,4,"K5"] ],
+                    Kategori: [ ["K5","Casual"], ["K6","Hangat"] ],
+                    Penjualan: [ ["J01C","P01C",5,"2025-03-10"], ["J02C","P02C",2,"2025-03-11"] ]
+                }
+            ]
         },
         // 9 Toko Elektronik
-        { name: "Toko Elektronik",
-          tables: [
-            { name: "Barang", fields: ["id_barang (varchar PK)","nama_barang (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_barang (varchar FK)","jumlah (int)","tgl_jual (date)"] }
-          ],
-          variants: [
-            { Barang: [ ["B01A","TV",2000000,5,"K1"], ["B02A","Kulkas",3000000,3,"K2"], ["B03A","AC",2500000,4,"K1"] ],
-              Kategori: [ ["K1","Elektronik"], ["K2","Rumah Tangga"] ],
-              Penjualan: [ ["J01A","B01A",1,"2025-03-01"], ["J02A","B02A",1,"2025-03-02"] ] },
-            { Barang: [ ["B01B","HP",1500000,10,"K3"], ["B02B","Laptop",5000000,4,"K4"], ["B03B","Tablet",3000000,6,"K3"] ],
-              Kategori: [ ["K3","Komunikasi"], ["K4","Komputer"] ],
-              Penjualan: [ ["J01B","B01B",2,"2025-03-05"], ["J02B","B02B",1,"2025-03-06"] ] },
-            { Barang: [ ["B01C","Kipas",400000,8,"K5"], ["B02C","Setrika",350000,7,"K5"], ["B03C","Blender",450000,5,"K6"] ],
-              Kategori: [ ["K5","Rumah Tangga"], ["K6","Dapur"] ],
-              Penjualan: [ ["J01C","B01C",3,"2025-03-10"], ["J02C","B02C",2,"2025-03-11"] ] }
-          ]
+        {
+            name: "Toko Elektronik",
+            tables: [
+                { name: "Barang", fields: ["id_barang (varchar PK)","nama_barang (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_barang (varchar FK)","jumlah (int)","tgl_jual (date)"] }
+            ],
+            variants: [
+                {
+                    Barang: [ ["B01A","TV",2000000,5,"K1"], ["B02A","Kulkas",3000000,3,"K2"], ["B03A","AC",2500000,4,"K1"] ],
+                    Kategori: [ ["K1","Elektronik"], ["K2","Rumah Tangga"] ],
+                    Penjualan: [ ["J01A","B01A",1,"2025-03-01"], ["J02A","B02A",1,"2025-03-02"] ]
+                },
+                {
+                    Barang: [ ["B01B","HP",1500000,10,"K3"], ["B02B","Laptop",5000000,4,"K4"], ["B03B","Tablet",3000000,6,"K3"] ],
+                    Kategori: [ ["K3","Komunikasi"], ["K4","Komputer"] ],
+                    Penjualan: [ ["J01B","B01B",2,"2025-03-05"], ["J02B","B02B",1,"2025-03-06"] ]
+                },
+                {
+                    Barang: [ ["B01C","Kipas",400000,8,"K5"], ["B02C","Setrika",350000,7,"K5"], ["B03C","Blender",450000,5,"K6"] ],
+                    Kategori: [ ["K5","Rumah Tangga"], ["K6","Dapur"] ],
+                    Penjualan: [ ["J01C","B01C",3,"2025-03-10"], ["J02C","B02C",2,"2025-03-11"] ]
+                }
+            ]
         },
         // 10 Rumah Sakit
-        { name: "Rumah Sakit",
-          tables: [
-            { name: "Pasien", fields: ["id_pasien (varchar PK)","nama (varchar)","alamat (varchar)","id_dokter (varchar FK)"] },
-            { name: "Dokter", fields: ["id_dokter (varchar PK)","nama_dokter (varchar)","spesialis (varchar)"] },
-            { name: "RawatInap", fields: ["id_rawat (varchar PK)","id_pasien (varchar FK)","tgl_masuk (date)","tgl_keluar (date)"] }
-          ],
-          variants: [
-            { Pasien: [ ["P01A","Andi","Jakarta","D01A"], ["P02A","Budi","Bandung","D02A"], ["P03A","Citra","Surabaya","D01A"] ],
-              Dokter: [ ["D01A","dr. Ahmad","Umum"], ["D02A","dr. Rita","Anak"] ],
-              RawatInap: [ ["R01A","P01A","2025-03-01","2025-03-03"], ["R02A","P02A","2025-03-02","2025-03-04"] ] },
-            { Pasien: [ ["P01B","Dewi","Medan","D03B"], ["P02B","Eka","Palembang","D04B"], ["P03B","Fani","Bali","D03B"] ],
-              Dokter: [ ["D03B","dr. Sari","Kandungan"], ["D04B","dr. Toni","Bedah"] ],
-              RawatInap: [ ["R01B","P01B","2025-03-05","2025-03-07"], ["R02B","P02B","2025-03-06","2025-03-08"] ] },
-            { Pasien: [ ["P01C","Gita","Yogyakarta","D05C"], ["P02C","Hadi","Semarang","D06C"], ["P03C","Indah","Solo","D05C"] ],
-              Dokter: [ ["D05C","dr. Lina","THT"], ["D06C","dr. Rudi","Mata"] ],
-              RawatInap: [ ["R01C","P01C","2025-03-10","2025-03-12"], ["R02C","P02C","2025-03-11","2025-03-13"] ] }
-          ]
+        {
+            name: "Rumah Sakit",
+            tables: [
+                { name: "Pasien", fields: ["id_pasien (varchar PK)","nama (varchar)","alamat (varchar)","id_dokter (varchar FK)"] },
+                { name: "Dokter", fields: ["id_dokter (varchar PK)","nama_dokter (varchar)","spesialis (varchar)"] },
+                { name: "RawatInap", fields: ["id_rawat (varchar PK)","id_pasien (varchar FK)","tgl_masuk (date)","tgl_keluar (date)"] }
+            ],
+            variants: [
+                {
+                    Pasien: [ ["P01A","Andi","Jakarta","D01A"], ["P02A","Budi","Bandung","D02A"], ["P03A","Citra","Surabaya","D01A"] ],
+                    Dokter: [ ["D01A","dr. Ahmad","Umum"], ["D02A","dr. Rita","Anak"] ],
+                    RawatInap: [ ["R01A","P01A","2025-03-01","2025-03-03"], ["R02A","P02A","2025-03-02","2025-03-04"] ]
+                },
+                {
+                    Pasien: [ ["P01B","Dewi","Medan","D03B"], ["P02B","Eka","Palembang","D04B"], ["P03B","Fani","Bali","D03B"] ],
+                    Dokter: [ ["D03B","dr. Sari","Kandungan"], ["D04B","dr. Toni","Bedah"] ],
+                    RawatInap: [ ["R01B","P01B","2025-03-05","2025-03-07"], ["R02B","P02B","2025-03-06","2025-03-08"] ]
+                },
+                {
+                    Pasien: [ ["P01C","Gita","Yogyakarta","D05C"], ["P02C","Hadi","Semarang","D06C"], ["P03C","Indah","Solo","D05C"] ],
+                    Dokter: [ ["D05C","dr. Lina","THT"], ["D06C","dr. Rudi","Mata"] ],
+                    RawatInap: [ ["R01C","P01C","2025-03-10","2025-03-12"], ["R02C","P02C","2025-03-11","2025-03-13"] ]
+                }
+            ]
         },
         // 11 Hotel
-        { name: "Hotel",
-          tables: [
-            { name: "Kamar", fields: ["id_kamar (varchar PK)","tipe_kamar (varchar)","harga_per_malam (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Menginap", fields: ["id_menginap (varchar PK)","id_kamar (varchar FK)","lama (int)","tgl_checkin (date)"] }
-          ],
-          variants: [
-            { Kamar: [ ["K01A","Standard",300000,"K1"], ["K02A","Deluxe",500000,"K2"], ["K03A","Suite",800000,"K2"] ],
-              Kategori: [ ["K1","Ekonomi"], ["K2","Premium"] ],
-              Menginap: [ ["M01A","K01A",2,"2025-03-01"], ["M02A","K02A",1,"2025-03-02"] ] },
-            { Kamar: [ ["K01B","Family",600000,"K3"], ["K02B","Executive",900000,"K4"], ["K03B","President",1500000,"K4"] ],
-              Kategori: [ ["K3","Keluarga"], ["K4","Bisnis"] ],
-              Menginap: [ ["M01B","K01B",2,"2025-03-05"], ["M02B","K02B",1,"2025-03-06"] ] },
-            { Kamar: [ ["K01C","Superior",400000,"K5"], ["K02C","VIP",750000,"K6"], ["K03C","Royal",1200000,"K6"] ],
-              Kategori: [ ["K5","Standar"], ["K6","Mewah"] ],
-              Menginap: [ ["M01C","K01C",2,"2025-03-10"], ["M02C","K02C",1,"2025-03-11"] ] }
-          ]
+        {
+            name: "Hotel",
+            tables: [
+                { name: "Kamar", fields: ["id_kamar (varchar PK)","tipe_kamar (varchar)","harga_per_malam (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Menginap", fields: ["id_menginap (varchar PK)","id_kamar (varchar FK)","lama (int)","tgl_checkin (date)"] }
+            ],
+            variants: [
+                {
+                    Kamar: [ ["K01A","Standard",300000,"K1"], ["K02A","Deluxe",500000,"K2"], ["K03A","Suite",800000,"K2"] ],
+                    Kategori: [ ["K1","Ekonomi"], ["K2","Premium"] ],
+                    Menginap: [ ["M01A","K01A",2,"2025-03-01"], ["M02A","K02A",1,"2025-03-02"] ]
+                },
+                {
+                    Kamar: [ ["K01B","Family",600000,"K3"], ["K02B","Executive",900000,"K4"], ["K03B","President",1500000,"K4"] ],
+                    Kategori: [ ["K3","Keluarga"], ["K4","Bisnis"] ],
+                    Menginap: [ ["M01B","K01B",2,"2025-03-05"], ["M02B","K02B",1,"2025-03-06"] ]
+                },
+                {
+                    Kamar: [ ["K01C","Superior",400000,"K5"], ["K02C","VIP",750000,"K6"], ["K03C","Royal",1200000,"K6"] ],
+                    Kategori: [ ["K5","Standar"], ["K6","Mewah"] ],
+                    Menginap: [ ["M01C","K01C",2,"2025-03-10"], ["M02C","K02C",1,"2025-03-11"] ]
+                }
+            ]
         },
         // 12 Perpustakaan
-        { name: "Perpustakaan",
-          tables: [
-            { name: "Buku", fields: ["id_buku (varchar PK)","judul (varchar)","pengarang (varchar)","id_kategori (varchar FK)"] },
-            { name: "Anggota", fields: ["id_anggota (varchar PK)","nama (varchar)","alamat (varchar)"] },
-            { name: "Peminjaman", fields: ["id_pinjam (varchar PK)","id_buku (varchar FK)","id_anggota (varchar FK)","tgl_pinjam (date)","tgl_kembali (date)"] }
-          ],
-          variants: [
-            { Buku: [ ["B01A","Buku A","Penulis A","K1"], ["B02A","Buku B","Penulis B","K2"], ["B03A","Buku C","Penulis C","K1"] ],
-              Anggota: [ ["A01A","Anggota 1","Jl. A"], ["A02A","Anggota 2","Jl. B"] ],
-              Peminjaman: [ ["P01A","B01A","A01A","2025-03-01","2025-03-08"], ["P02A","B02A","A02A","2025-03-02","2025-03-09"] ] },
-            { Buku: [ ["B01B","Novel A","Pengarang X","K3"], ["B02B","Komik B","Pengarang Y","K4"], ["B03B","Majalah C","Redaksi","K4"] ],
-              Anggota: [ ["A01B","Anggota 3","Jl. C"], ["A02B","Anggota 4","Jl. D"] ],
-              Peminjaman: [ ["P01B","B01B","A01B","2025-03-05","2025-03-12"], ["P02B","B02B","A02B","2025-03-06","2025-03-13"] ] },
-            { Buku: [ ["B01C","Sejarah","Pengarang P","K5"], ["B02C","Biografi","Pengarang Q","K6"], ["B03C","Kamus","Tim","K5"] ],
-              Anggota: [ ["A01C","Anggota 5","Jl. E"], ["A02C","Anggota 6","Jl. F"] ],
-              Peminjaman: [ ["P01C","B01C","A01C","2025-03-10","2025-03-17"], ["P02C","B02C","A02C","2025-03-11","2025-03-18"] ] }
-          ]
+        {
+            name: "Perpustakaan",
+            tables: [
+                { name: "Buku", fields: ["id_buku (varchar PK)","judul (varchar)","pengarang (varchar)","id_kategori (varchar FK)"] },
+                { name: "Anggota", fields: ["id_anggota (varchar PK)","nama (varchar)","alamat (varchar)"] },
+                { name: "Peminjaman", fields: ["id_pinjam (varchar PK)","id_buku (varchar FK)","id_anggota (varchar FK)","tgl_pinjam (date)","tgl_kembali (date)"] }
+            ],
+            variants: [
+                {
+                    Buku: [ ["B01A","Buku A","Penulis A","K1"], ["B02A","Buku B","Penulis B","K2"], ["B03A","Buku C","Penulis C","K1"] ],
+                    Anggota: [ ["A01A","Anggota 1","Jl. A"], ["A02A","Anggota 2","Jl. B"] ],
+                    Peminjaman: [ ["P01A","B01A","A01A","2025-03-01","2025-03-08"], ["P02A","B02A","A02A","2025-03-02","2025-03-09"] ]
+                },
+                {
+                    Buku: [ ["B01B","Novel A","Pengarang X","K3"], ["B02B","Komik B","Pengarang Y","K4"], ["B03B","Majalah C","Redaksi","K4"] ],
+                    Anggota: [ ["A01B","Anggota 3","Jl. C"], ["A02B","Anggota 4","Jl. D"] ],
+                    Peminjaman: [ ["P01B","B01B","A01B","2025-03-05","2025-03-12"], ["P02B","B02B","A02B","2025-03-06","2025-03-13"] ]
+                },
+                {
+                    Buku: [ ["B01C","Sejarah","Pengarang P","K5"], ["B02C","Biografi","Pengarang Q","K6"], ["B03C","Kamus","Tim","K5"] ],
+                    Anggota: [ ["A01C","Anggota 5","Jl. E"], ["A02C","Anggota 6","Jl. F"] ],
+                    Peminjaman: [ ["P01C","B01C","A01C","2025-03-10","2025-03-17"], ["P02C","B02C","A02C","2025-03-11","2025-03-18"] ]
+                }
+            ]
         },
         // 13 Sekolah
-        { name: "Sekolah",
-          tables: [
-            { name: "Siswa", fields: ["id_siswa (varchar PK)","nama (varchar)","kelas (varchar)"] },
-            { name: "Guru", fields: ["id_guru (varchar PK)","nama_guru (varchar)","mapel (varchar)"] },
-            { name: "Nilai", fields: ["id_nilai (varchar PK)","id_siswa (varchar FK)","id_guru (varchar FK)","nilai (int)"] }
-          ],
-          variants: [
-            { Siswa: [ ["S01A","Andi","XII"], ["S02A","Budi","XII"], ["S03A","Citra","XI"] ],
-              Guru: [ ["G01A","Pak Budi","Matematika"], ["G02A","Bu Dewi","Fisika"] ],
-              Nilai: [ ["N01A","S01A","G01A",85], ["N02A","S02A","G02A",90] ] },
-            { Siswa: [ ["S01B","Dewi","XII"], ["S02B","Eka","XI"], ["S03B","Fani","X"] ],
-              Guru: [ ["G01B","Pak Ahmad","Kimia"], ["G02B","Bu Rina","Biologi"] ],
-              Nilai: [ ["N01B","S01B","G01B",75], ["N02B","S02B","G02B",80] ] },
-            { Siswa: [ ["S01C","Gita","XII"], ["S02C","Hadi","XII"], ["S03C","Indah","XI"] ],
-              Guru: [ ["G01C","Pak Joko","Sejarah"], ["G02C","Bu Sari","Geografi"] ],
-              Nilai: [ ["N01C","S01C","G01C",88], ["N02C","S02C","G02C",92] ] }
-          ]
+        {
+            name: "Sekolah",
+            tables: [
+                { name: "Siswa", fields: ["id_siswa (varchar PK)","nama (varchar)","kelas (varchar)"] },
+                { name: "Guru", fields: ["id_guru (varchar PK)","nama_guru (varchar)","mapel (varchar)"] },
+                { name: "Nilai", fields: ["id_nilai (varchar PK)","id_siswa (varchar FK)","id_guru (varchar FK)","nilai (int)"] }
+            ],
+            variants: [
+                {
+                    Siswa: [ ["S01A","Andi","XII"], ["S02A","Budi","XII"], ["S03A","Citra","XI"] ],
+                    Guru: [ ["G01A","Pak Budi","Matematika"], ["G02A","Bu Dewi","Fisika"] ],
+                    Nilai: [ ["N01A","S01A","G01A",85], ["N02A","S02A","G02A",90] ]
+                },
+                {
+                    Siswa: [ ["S01B","Dewi","XII"], ["S02B","Eka","XI"], ["S03B","Fani","X"] ],
+                    Guru: [ ["G01B","Pak Ahmad","Kimia"], ["G02B","Bu Rina","Biologi"] ],
+                    Nilai: [ ["N01B","S01B","G01B",75], ["N02B","S02B","G02B",80] ]
+                },
+                {
+                    Siswa: [ ["S01C","Gita","XII"], ["S02C","Hadi","XII"], ["S03C","Indah","XI"] ],
+                    Guru: [ ["G01C","Pak Joko","Sejarah"], ["G02C","Bu Sari","Geografi"] ],
+                    Nilai: [ ["N01C","S01C","G01C",88], ["N02C","S02C","G02C",92] ]
+                }
+            ]
         },
         // 14 Toko Olahraga
-        { name: "Toko Olahraga",
-          tables: [
-            { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_produk (varchar FK)","jumlah (int)","tgl_jual (date)"] }
-          ],
-          variants: [
-            { Produk: [ ["P01A","Sepatu",300000,10,"K1"], ["P02A","Bola",100000,15,"K2"], ["P03A","Raket",250000,8,"K1"] ],
-              Kategori: [ ["K1","Perlengkapan"], ["K2","Aksesoris"] ],
-              Penjualan: [ ["J01A","P01A",2,"2025-03-01"], ["J02A","P02A",3,"2025-03-02"] ] },
-            { Produk: [ ["P01B","Jersey",150000,12,"K3"], ["P02B","Celana Olahraga",120000,10,"K3"], ["P03B","Kaos Kaki",30000,20,"K4"] ],
-              Kategori: [ ["K3","Pakaian"], ["K4","Aksesoris"] ],
-              Penjualan: [ ["J01B","P01B",3,"2025-03-05"], ["J02B","P02B",2,"2025-03-06"] ] },
-            { Produk: [ ["P01C","Dumbbell",80000,8,"K5"], ["P02C","Matras",150000,5,"K6"], ["P03C","Tali Skipping",25000,15,"K5"] ],
-              Kategori: [ ["K5","Fitness"], ["K6","Yoga"] ],
-              Penjualan: [ ["J01C","P01C",2,"2025-03-10"], ["J02C","P02C",1,"2025-03-11"] ] }
-          ]
+        {
+            name: "Toko Olahraga",
+            tables: [
+                { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_produk (varchar FK)","jumlah (int)","tgl_jual (date)"] }
+            ],
+            variants: [
+                {
+                    Produk: [ ["P01A","Sepatu",300000,10,"K1"], ["P02A","Bola",100000,15,"K2"], ["P03A","Raket",250000,8,"K1"] ],
+                    Kategori: [ ["K1","Perlengkapan"], ["K2","Aksesoris"] ],
+                    Penjualan: [ ["J01A","P01A",2,"2025-03-01"], ["J02A","P02A",3,"2025-03-02"] ]
+                },
+                {
+                    Produk: [ ["P01B","Jersey",150000,12,"K3"], ["P02B","Celana Olahraga",120000,10,"K3"], ["P03B","Kaos Kaki",30000,20,"K4"] ],
+                    Kategori: [ ["K3","Pakaian"], ["K4","Aksesoris"] ],
+                    Penjualan: [ ["J01B","P01B",3,"2025-03-05"], ["J02B","P02B",2,"2025-03-06"] ]
+                },
+                {
+                    Produk: [ ["P01C","Dumbbell",80000,8,"K5"], ["P02C","Matras",150000,5,"K6"], ["P03C","Tali Skipping",25000,15,"K5"] ],
+                    Kategori: [ ["K5","Fitness"], ["K6","Yoga"] ],
+                    Penjualan: [ ["J01C","P01C",2,"2025-03-10"], ["J02C","P02C",1,"2025-03-11"] ]
+                }
+            ]
         },
         // 15 Toko Mainan
-        { name: "Toko Mainan",
-          tables: [
-            { name: "Mainan", fields: ["id_mainan (varchar PK)","nama_mainan (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
-            { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
-            { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_mainan (varchar FK)","jumlah (int)","tgl_jual (date)"] }
-          ],
-          variants: [
-            { Mainan: [ ["M01A","Boneka",50000,20,"K1"], ["M02A","Mobil-mobilan",75000,15,"K2"], ["M03A","Puzzle",40000,10,"K1"] ],
-              Kategori: [ ["K1","Anak-anak"], ["K2","Edukasi"] ],
-              Penjualan: [ ["J01A","M01A",3,"2025-03-01"], ["J02A","M02A",2,"2025-03-02"] ] },
-            { Mainan: [ ["M01B","Lego",150000,8,"K3"], ["M02B","Robot",200000,5,"K4"], ["M03B","Action Figure",180000,6,"K3"] ],
-              Kategori: [ ["K3","Koleksi"], ["K4","Elektronik"] ],
-              Penjualan: [ ["J01B","M01B",1,"2025-03-05"], ["J02B","M02B",2,"2025-03-06"] ] },
-            { Mainan: [ ["M01C","Bola",30000,25,"K5"], ["M02C","Layang-layang",15000,30,"K6"], ["M03C","Congklak",20000,12,"K5"] ],
-              Kategori: [ ["K5","Outdoor"], ["K6","Tradisional"] ],
-              Penjualan: [ ["J01C","M01C",5,"2025-03-10"], ["J02C","M02C",4,"2025-03-11"] ] }
-          ]
+        {
+            name: "Toko Mainan",
+            tables: [
+                { name: "Mainan", fields: ["id_mainan (varchar PK)","nama_mainan (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
+                { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
+                { name: "Penjualan", fields: ["id_penjualan (varchar PK)","id_mainan (varchar FK)","jumlah (int)","tgl_jual (date)"] }
+            ],
+            variants: [
+                {
+                    Mainan: [ ["M01A","Boneka",50000,20,"K1"], ["M02A","Mobil-mobilan",75000,15,"K2"], ["M03A","Puzzle",40000,10,"K1"] ],
+                    Kategori: [ ["K1","Anak-anak"], ["K2","Edukasi"] ],
+                    Penjualan: [ ["J01A","M01A",3,"2025-03-01"], ["J02A","M02A",2,"2025-03-02"] ]
+                },
+                {
+                    Mainan: [ ["M01B","Lego",150000,8,"K3"], ["M02B","Robot",200000,5,"K4"], ["M03B","Action Figure",180000,6,"K3"] ],
+                    Kategori: [ ["K3","Koleksi"], ["K4","Elektronik"] ],
+                    Penjualan: [ ["J01B","M01B",1,"2025-03-05"], ["J02B","M02B",2,"2025-03-06"] ]
+                },
+                {
+                    Mainan: [ ["M01C","Bola",30000,25,"K5"], ["M02C","Layang-layang",15000,30,"K6"], ["M03C","Congklak",20000,12,"K5"] ],
+                    Kategori: [ ["K5","Outdoor"], ["K6","Tradisional"] ],
+                    Penjualan: [ ["J01C","M01C",5,"2025-03-10"], ["J02C","M02C",4,"2025-03-11"] ]
+                }
+            ]
         }
     ];
 
@@ -513,7 +673,7 @@
         const kelas2 = document.getElementById('kelas2');
         const kelas3 = document.getElementById('kelas3');
         siswaList.forEach((s, index) => {
-            let opt = document.createElement('option');
+            const opt = document.createElement('option');
             opt.value = index;
             opt.textContent = s.nama;
             if (s.kelas === "XII Informatika 1") kelas1.appendChild(opt);
@@ -531,8 +691,8 @@
             return;
         }
         const siswa = siswaList[idx];
-        const themeIndex = Math.floor(idx / 3);
-        const varianIndex = idx % 3;
+        const themeIndex = Math.floor(idx / 3);  // 0-14, setiap 3 siswa mendapat tema sama
+        const varianIndex = idx % 3;             // 0,1,2
         const theme = themes[themeIndex];
         const variant = theme.variants[varianIndex];
         const variantLetter = String.fromCharCode(65 + varianIndex);
@@ -544,9 +704,9 @@
         // Generate tabel
         let html = '';
         theme.tables.forEach(tbl => {
-            let tableName = tbl.name;
-            let fields = tbl.fields;
-            let data = variant[tableName];
+            const tableName = tbl.name;
+            const fields = tbl.fields;
+            const data = variant[tableName];
             html += `<div class="table-data">`;
             html += `<h6 class="fw-bold">${tableName}</h6>`;
             html += `<p><strong>Struktur:</strong> ${fields.join(', ')}</p>`;
@@ -565,7 +725,7 @@
         document.getElementById('tabelContainer').innerHTML = html;
 
         document.getElementById('areaSoal').style.display = 'block';
-        window.scrollTo({ top: document.getElementById('areaSoal').offsetTop, behavior: 'smooth' });
+        window.scrollTo({ top: document.getElementById('areaSoal').offsetTop - 20, behavior: 'smooth' });
     };
 
     // ================= FUNGSI CETAK PDF =================
@@ -574,24 +734,15 @@
         const kelas = document.getElementById('kelasSiswa').textContent;
         const temaVarian = document.getElementById('temaVarian').textContent;
         const tabelHTML = document.getElementById('tabelContainer').innerHTML;
-        const soalHTML = `
-            <h4>Soal SQL (kerjakan semua)</h4>
-            <ol>
-                <li>Tulis perintah CREATE TABLE untuk ketiga tabel di atas (lengkapi primary key & foreign key).</li>
-                <li>Tulis perintah INSERT untuk memasukkan semua data dummy yang diberikan.</li>
-                <li>Tampilkan semua data dari tabel utama beserta nama kategorinya (gunakan JOIN).</li>
-                <li>Hitung total pendapatan dari transaksi (jumlah * harga) untuk bulan Maret 2025.</li>
-                <li>Tampilkan produk yang paling banyak terjual.</li>
-                <li>Urutkan produk berdasarkan harga termahal ke termurah.</li>
-                <li>Tampilkan daftar pelanggan (jika ada) beserta total transaksinya (GROUP BY).</li>
-                <li>Buat query untuk menambah stok produk dengan id tertentu sebanyak 5.</li>
-                <li>Buat query untuk menghapus data transaksi dengan id tertentu.</li>
-                <li>Buat query untuk menampilkan produk yang harganya di atas rata-rata harga semua produk.</li>
-            </ol>
-            <h4>Tugas Tambahan: Poster Edukasi (Canva/gambar tangan)</h4>
-            <p>Buat infografis/poster tentang pentingnya basis data, DDL vs DML, JOIN, fungsi agregat, atau tips desain database. Kumpulkan print atau file digital.</p>
-            <p><em>Dokumen ini sah sebagai bukti tugas individu.</em></p>
-        `;
+
+        // Ambil soal dan tugas poster dari HTML yang sudah ada
+        const soalList = document.querySelectorAll('#areaSoal .list-group-item');
+        let soalText = '';
+        soalList.forEach((item, index) => {
+            soalText += `${index+1}. ${item.textContent}\n`;
+        });
+
+        const posterHTML = document.querySelector('.alert-warning').innerHTML;
 
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
@@ -599,22 +750,31 @@
             <head>
                 <title>Soal SQL - ${nama}</title>
                 <style>
-                    body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
+                    body { font-family: 'Segoe UI', sans-serif; padding: 30px; }
                     table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-                    th, td { border: 1px solid #ddd; padding: 6px; }
+                    th, td { border: 1px solid #ddd; padding: 8px; }
                     th { background-color: #f2f2f2; }
-                    .header { margin-bottom: 30px; }
+                    .header { margin-bottom: 30px; border-bottom: 2px solid #0d6efd; padding-bottom: 10px; }
+                    .tugas-tambahan { background: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 20px; }
                 </style>
             </head>
             <body>
                 <div class="header">
-                    <h2>Tugas SQL Kelas 12</h2>
+                    <h2>Tugas SQL Kelas 12 Informatika</h2>
                     <p><strong>Nama:</strong> ${nama}</p>
                     <p><strong>Kelas:</strong> ${kelas}</p>
                     <p><strong>Tema:</strong> ${temaVarian}</p>
                 </div>
                 ${tabelHTML}
-                ${soalHTML}
+                <h4>Soal SQL (kerjakan semua)</h4>
+                <ol>
+                    ${Array.from(soalList).map(item => `<li>${item.textContent}</li>`).join('')}
+                </ol>
+                <div class="tugas-tambahan">
+                    <h4>Tugas Tambahan: Infografis / Poster Edukasi</h4>
+                    ${document.querySelector('.alert-warning div').innerHTML}
+                </div>
+                <p style="margin-top: 30px;"><em>Dokumen ini sah sebagai bukti tugas individu.</em></p>
             </body>
             </html>
         `);
