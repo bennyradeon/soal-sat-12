@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Soal SQL Kelas 12 Informatika</title>
+    <title>Generator Soal SQL Kelas 12 – SMAK Petra 3</title>
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -46,6 +46,18 @@
         .btn-print:hover {
             background: #0b5ed7;
         }
+        .btn-home {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        .btn-home:hover {
+            background: #5a6268;
+        }
         .rubrik-table {
             background: white;
             border-radius: 20px;
@@ -66,6 +78,13 @@
             color: white;
             font-size: 1rem;
         }
+        .instruksi {
+            background-color: #e7f5ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -76,8 +95,8 @@
         <p class="lead">Pilih kelas dan nama siswa untuk mendapatkan soal unik. Setiap siswa mendapat tema & varian berbeda.</p>
     </div>
 
-    <!-- Pilihan Kelas -->
-    <div class="row g-4">
+    <!-- Pilihan Kelas + Tombol Home -->
+    <div class="row g-4 align-items-end">
         <div class="col-md-4">
             <div class="card p-3 shadow-sm">
                 <h5 class="fw-bold"><i class="fas fa-users me-2"></i>XII Informatika 1</h5>
@@ -107,6 +126,11 @@
         </div>
     </div>
 
+    <!-- Tombol Back Home (reset) -->
+    <div class="text-center my-4">
+        <button class="btn-home" onclick="resetHome()"><i class="fas fa-home me-2"></i>Back Home (Reset)</button>
+    </div>
+
     <!-- Tempat soal muncul -->
     <div id="areaSoal" class="card-soal" style="display: none;">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -121,24 +145,24 @@
         <!-- Tabel-tabel akan diisi JavaScript -->
         <div id="tabelContainer"></div>
 
-        <!-- Soal SQL tetap -->
+        <!-- Soal SQL dinamis -->
         <div class="mt-4">
             <h5><i class="fas fa-question-circle me-2"></i>Soal SQL (kerjakan semua)</h5>
-            <ol class="list-group list-group-numbered mb-3">
-                <li class="list-group-item">Tulis perintah CREATE TABLE untuk ketiga tabel di atas (lengkapi primary key & foreign key).</li>
-                <li class="list-group-item">Tulis perintah INSERT untuk memasukkan semua data dummy yang diberikan.</li>
-                <li class="list-group-item">Tampilkan semua data dari tabel utama beserta nama kategorinya (gunakan JOIN).</li>
-                <li class="list-group-item">Hitung total pendapatan dari transaksi (jumlah * harga) untuk bulan Maret 2025.</li>
-                <li class="list-group-item">Tampilkan produk yang paling banyak terjual.</li>
-                <li class="list-group-item">Urutkan produk berdasarkan harga termahal ke termurah.</li>
-                <li class="list-group-item">Tampilkan daftar pelanggan (jika ada) beserta total transaksinya (GROUP BY).</li>
-                <li class="list-group-item">Buat query untuk menambah stok produk dengan id tertentu sebanyak 5.</li>
-                <li class="list-group-item">Buat query untuk menghapus data transaksi dengan id tertentu.</li>
-                <li class="list-group-item">Buat query untuk menampilkan produk yang harganya di atas rata-rata harga semua produk.</li>
+            <ol class="list-group list-group-numbered mb-3" id="soalList">
+                <!-- akan diisi js -->
             </ol>
         </div>
 
-        <!-- Tugas Poster Canva (format rapi) -->
+        <!-- Instruksi pengumpulan tugas -->
+        <div class="instruksi">
+            <h5><i class="fas fa-cloud-upload-alt me-2"></i>Cara Pengumpulan</h5>
+            <ul class="mb-0">
+                <li><strong>10 soal SQL:</strong> Kerjakan di <strong>Google Docs</strong>. Beri nama file: <em>SQL_NamaSiswa_Kelas</em>. Kumpulkan melalui tugas di <strong>Google Classroom</strong>.</li>
+                <li><strong>Tugas Tambahan (Poster/Infografis):</strong> Buat di Canva (atau gambar tangan). Kumpulkan dalam bentuk <strong>link Canva</strong> (setel berbagi ke "siapa pun yang memiliki link") atau foto/scan jika manual. Link pengumpulan tersedia di Google Classroom.</li>
+            </ul>
+        </div>
+
+        <!-- Tugas Poster Canva (detail) -->
         <div class="alert alert-warning d-flex align-items-start">
             <i class="fas fa-paint-brush me-3 mt-1 fs-3"></i>
             <div>
@@ -156,7 +180,7 @@
                     </li>
                     <li>Poster harus memuat: judul, penjelasan singkat, dan ilustrasi/gambar pendukung.</li>
                     <li>Ukuran kertas A4 (boleh portrait/landscape).</li>
-                    <li>Kumpulkan dalam bentuk <strong>file PDF/JPEG</strong> (jika digital) atau print-out (jika manual).</li>
+                    <li>Kumpulkan dalam bentuk <strong>file PDF/JPEG</strong> (jika digital) atau print-out (jika manual) melalui Google Classroom.</li>
                 </ul>
                 <p class="mb-0 text-muted"><i class="fas fa-info-circle me-1"></i>Kreativitas dan kebenaran konten menjadi penilaian.</p>
             </div>
@@ -181,17 +205,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Struktur Tabel (DDL) ❗pada 10 soal</td>
+                        <td>Struktur Tabel (DDL) ❗Query pada 10 soal</td>
                         <td>10</td>
                         <td>Ketepatan primary key, foreign key, tipe data, dan kelengkapan tabel.</td>
                     </tr>
                     <tr>
-                        <td>Query DML (INSERT, UPDATE, DELETE) ❗pada 10 soal</td>
+                        <td>Query DML (INSERT, UPDATE, DELETE)❗Query pada 10 soal</td>
                         <td>10</td>
                         <td>Kebenaran sintaks dan kesesuaian dengan data dummy.</td>
                     </tr>
                     <tr>
-                        <td>Query SELECT (dasar, JOIN, agregat)❗pada 10 soal</td>
+                        <td>Query SELECT (dasar, JOIN, agregat)❗Query pada 10 soal</td>
                         <td>20</td>
                         <td>Kebenaran logika, penggunaan JOIN, GROUP BY, fungsi agregat, WHERE.</td>
                     </tr>
@@ -201,9 +225,9 @@
                         <td>Kreativitas, kesesuaian topik, kebenaran konten, estetika desain (Canva/gambar tangan).</td>
                     </tr>
                     <tr>
-                        <td>Kerapian & Ketepatan Waktu pada poster/infografis</td>
+                        <td>Kerapian & Ketepatan Waktu</td>
                         <td>20</td>
-                        <td>Desain rapi, mudah dibaca, dikumpulkan tepat waktu.</td>
+                        <td>Desain rapi, mudah dibaca,Kreatif dan dikumpulkan tepat waktu.</td>
                     </tr>
                     <tr class="table-primary">
                         <th>Total</th>
@@ -221,9 +245,9 @@
 </footer>
 
 <script>
-    // ================= DATA SISWA (15 per kelas, total 45) =================
+    // ================= DATA SISWA LENGKAP (63 siswa) =================
     const siswaList = [
-        // XII Informatika 1 (0-14)
+        // XII Informatika 1 (22 siswa)
         { nama: "ENLAY COEPUTRA", kelas: "XII Informatika 1" },
         { nama: "FELICIA ANGEL SIADA", kelas: "XII Informatika 1" },
         { nama: "GABRIEL JUSTIN KRISNAWAN", kelas: "XII Informatika 1" },
@@ -239,7 +263,14 @@
         { nama: "GABRIEL ALEXA NYOTO", kelas: "XII Informatika 1" },
         { nama: "HAWILA RESTU WIGUSTI", kelas: "XII Informatika 1" },
         { nama: "ARFIN", kelas: "XII Informatika 1" },
-        // XII Informatika 2 (15-29)
+        { nama: "CINDY OCTAVIONA MINTARJO", kelas: "XII Informatika 1" },
+        { nama: "CLAWDYA GABRIELLA KRISTANTO", kelas: "XII Informatika 1" },
+        { nama: "JENNIFER SETIO", kelas: "XII Informatika 1" },
+        { nama: "JOSEPHINE SERRIN", kelas: "XII Informatika 1" },
+        { nama: "KENZA MATTHEW THEODORRUS", kelas: "XII Informatika 1" },
+        { nama: "MUHAMMAD KIRAN NOOR", kelas: "XII Informatika 1" },
+        { nama: "REKU DAVIDA", kelas: "XII Informatika 1" },
+        // XII Informatika 2 (23 siswa)
         { nama: "DANIEL ANGELO TJANDRA", kelas: "XII Informatika 2" },
         { nama: "DELICIA CLAIRINE DIHARDJA", kelas: "XII Informatika 2" },
         { nama: "EDWARD FREDERICK JO", kelas: "XII Informatika 2" },
@@ -255,7 +286,15 @@
         { nama: "IVAN REINARD JOAKIMA", kelas: "XII Informatika 2" },
         { nama: "JASON LOUISE FERNANDO", kelas: "XII Informatika 2" },
         { nama: "SOPHY ANGELINE KUSUMA", kelas: "XII Informatika 2" },
-        // XII Informatika 3 (30-44)
+        { nama: "CHRISTHOPER BRYANT SANTOSO", kelas: "XII Informatika 2" },
+        { nama: "GABRIELLA JASMINE HARSONO", kelas: "XII Informatika 2" },
+        { nama: "GILBERT GLORIUS GUNAWAN", kelas: "XII Informatika 2" },
+        { nama: "IVANA PRICILLA G.", kelas: "XII Informatika 2" },
+        { nama: "JOSAFAT CHRISTIAN PANG", kelas: "XII Informatika 2" },
+        { nama: "SHERAVEEN OENTIANTO", kelas: "XII Informatika 2" },
+        { nama: "VINCENT VALENTINO TJUATJADJAJA", kelas: "XII Informatika 2" },
+        { nama: "VIRGINIA HONEST T.", kelas: "XII Informatika 2" },
+        // XII Informatika 3 (18 siswa)
         { nama: "ANDREW HARTANTO SOELISTYO", kelas: "XII Informatika 3" },
         { nama: "DEVON IMANUEL S.", kelas: "XII Informatika 3" },
         { nama: "FELICIA CLARISSA NOTO", kelas: "XII Informatika 3" },
@@ -270,14 +309,22 @@
         { nama: "SHEENA LEWISANTOSO", kelas: "XII Informatika 3" },
         { nama: "CALISTA CHRISTIE", kelas: "XII Informatika 3" },
         { nama: "DANIEL JOEY ANGGONO", kelas: "XII Informatika 3" },
-        { nama: "DEVEN GERALDO", kelas: "XII Informatika 3" }
+        { nama: "DEVEN GERALDO", kelas: "XII Informatika 3" },
+        { nama: "KATHLEEN ANGELICA V.G", kelas: "XII Informatika 3" },
+        { nama: "MICHAEL ANDREANI", kelas: "XII Informatika 3" },
+        { nama: "NG.CALVIN SEBASTIAN", kelas: "XII Informatika 3" }
     ];
 
-    // ================= 15 TEMA LENGKAP DENGAN 3 VARIAN =================
+    // ================= 15 TEMA DENGAN METADATA UNTUK SOAL =================
     const themes = [
         // 1 Toko Buku
         {
             name: "Toko Buku",
+            mainItem: "buku",
+            mainTable: "Buku",
+            transTable: "Penjualan",
+            transVerb: "terjual",
+            customer: null, // tidak ada pelanggan
             tables: [
                 { name: "Buku", fields: ["id_buku (varchar PK)", "judul (varchar)", "pengarang (varchar)", "harga (int)", "stok (int)", "id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)", "nama_kategori (varchar)"] },
@@ -304,6 +351,11 @@
         // 2 Apotek
         {
             name: "Apotek",
+            mainItem: "obat",
+            mainTable: "Obat",
+            transTable: "Pembelian",
+            transVerb: "dibeli",
+            customer: null,
             tables: [
                 { name: "Obat", fields: ["id_obat (varchar PK)", "nama_obat (varchar)", "jenis (varchar)", "harga (int)", "stok (int)", "id_suplier (varchar FK)"] },
                 { name: "Suplier", fields: ["id_suplier (varchar PK)", "nama_suplier (varchar)", "no_telp (varchar)"] },
@@ -330,6 +382,11 @@
         // 3 Rental Mobil
         {
             name: "Rental Mobil",
+            mainItem: "mobil",
+            mainTable: "Mobil",
+            transTable: "Transaksi",
+            transVerb: "disewa",
+            customer: null,
             tables: [
                 { name: "Mobil", fields: ["id_mobil (varchar PK)","plat (varchar)","merk (varchar)","tahun (int)","harga_sewa (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -356,6 +413,11 @@
         // 4 Laundry
         {
             name: "Laundry",
+            mainItem: "layanan",
+            mainTable: "Layanan",
+            transTable: "Transaksi",
+            transVerb: "digunakan",
+            customer: null,
             tables: [
                 { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga_per_kg (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -382,6 +444,11 @@
         // 5 Kafe
         {
             name: "Kafe",
+            mainItem: "menu",
+            mainTable: "Menu",
+            transTable: "Pesanan",
+            transVerb: "dipesan",
+            customer: null,
             tables: [
                 { name: "Menu", fields: ["id_menu (varchar PK)","nama_menu (varchar)","harga (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -408,6 +475,11 @@
         // 6 Salon
         {
             name: "Salon",
+            mainItem: "layanan",
+            mainTable: "Layanan",
+            transTable: "Transaksi",
+            transVerb: "dilakukan",
+            customer: null,
             tables: [
                 { name: "Layanan", fields: ["id_layanan (varchar PK)","nama_layanan (varchar)","harga (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -434,6 +506,11 @@
         // 7 Bengkel
         {
             name: "Bengkel",
+            mainItem: "sparepart",
+            mainTable: "Sparepart",
+            transTable: "Servis",
+            transVerb: "digunakan",
+            customer: null,
             tables: [
                 { name: "Sparepart", fields: ["id_sparepart (varchar PK)","nama_sparepart (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -460,6 +537,11 @@
         // 8 Toko Pakaian
         {
             name: "Toko Pakaian",
+            mainItem: "produk",
+            mainTable: "Produk",
+            transTable: "Penjualan",
+            transVerb: "terjual",
+            customer: null,
             tables: [
                 { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -486,6 +568,11 @@
         // 9 Toko Elektronik
         {
             name: "Toko Elektronik",
+            mainItem: "barang",
+            mainTable: "Barang",
+            transTable: "Penjualan",
+            transVerb: "terjual",
+            customer: null,
             tables: [
                 { name: "Barang", fields: ["id_barang (varchar PK)","nama_barang (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -512,6 +599,11 @@
         // 10 Rumah Sakit
         {
             name: "Rumah Sakit",
+            mainItem: "pasien",
+            mainTable: "Pasien",
+            transTable: "RawatInap",
+            transVerb: "dirawat",
+            customer: "pasien", // ada pelanggan
             tables: [
                 { name: "Pasien", fields: ["id_pasien (varchar PK)","nama (varchar)","alamat (varchar)","id_dokter (varchar FK)"] },
                 { name: "Dokter", fields: ["id_dokter (varchar PK)","nama_dokter (varchar)","spesialis (varchar)"] },
@@ -538,6 +630,11 @@
         // 11 Hotel
         {
             name: "Hotel",
+            mainItem: "kamar",
+            mainTable: "Kamar",
+            transTable: "Menginap",
+            transVerb: "disewa",
+            customer: null,
             tables: [
                 { name: "Kamar", fields: ["id_kamar (varchar PK)","tipe_kamar (varchar)","harga_per_malam (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -564,6 +661,11 @@
         // 12 Perpustakaan
         {
             name: "Perpustakaan",
+            mainItem: "buku",
+            mainTable: "Buku",
+            transTable: "Peminjaman",
+            transVerb: "dipinjam",
+            customer: "anggota",
             tables: [
                 { name: "Buku", fields: ["id_buku (varchar PK)","judul (varchar)","pengarang (varchar)","id_kategori (varchar FK)"] },
                 { name: "Anggota", fields: ["id_anggota (varchar PK)","nama (varchar)","alamat (varchar)"] },
@@ -590,6 +692,11 @@
         // 13 Sekolah
         {
             name: "Sekolah",
+            mainItem: "siswa",
+            mainTable: "Siswa",
+            transTable: "Nilai",
+            transVerb: "dinilai",
+            customer: "siswa",
             tables: [
                 { name: "Siswa", fields: ["id_siswa (varchar PK)","nama (varchar)","kelas (varchar)"] },
                 { name: "Guru", fields: ["id_guru (varchar PK)","nama_guru (varchar)","mapel (varchar)"] },
@@ -616,6 +723,11 @@
         // 14 Toko Olahraga
         {
             name: "Toko Olahraga",
+            mainItem: "produk",
+            mainTable: "Produk",
+            transTable: "Penjualan",
+            transVerb: "terjual",
+            customer: null,
             tables: [
                 { name: "Produk", fields: ["id_produk (varchar PK)","nama_produk (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -642,6 +754,11 @@
         // 15 Toko Mainan
         {
             name: "Toko Mainan",
+            mainItem: "mainan",
+            mainTable: "Mainan",
+            transTable: "Penjualan",
+            transVerb: "terjual",
+            customer: null,
             tables: [
                 { name: "Mainan", fields: ["id_mainan (varchar PK)","nama_mainan (varchar)","harga (int)","stok (int)","id_kategori (varchar FK)"] },
                 { name: "Kategori", fields: ["id_kategori (varchar PK)","nama_kategori (varchar)"] },
@@ -667,6 +784,29 @@
         }
     ];
 
+    // ================= FUNGSI MENGHASILKAN SOAL BERDASARKAN TEMA =================
+    function generateSoal(theme) {
+        const main = theme.mainItem;
+        const mainTable = theme.mainTable;
+        const transTable = theme.transTable;
+        const verb = theme.transVerb;
+        const customer = theme.customer; // bisa null atau string
+
+        let soal = [
+            `Tulis perintah CREATE TABLE untuk ketiga tabel di atas (lengkapi primary key & foreign key).`,
+            `Tulis perintah INSERT untuk memasukkan semua data dummy yang diberikan.`,
+            `Tampilkan semua data dari tabel ${mainTable} beserta nama kategorinya (gunakan JOIN).`,
+            `Hitung total pendapatan dari ${transTable} (jumlah * harga) untuk bulan Maret 2025.`,
+            `Tampilkan ${main} yang paling banyak ${verb}.`,
+            `Urutkan ${main} berdasarkan harga termahal ke termurah.`,
+            customer ? `Tampilkan daftar ${customer} beserta total ${verb} (GROUP BY).` : `Tampilkan daftar ${main} beserta total ${verb} (GROUP BY).`,
+            `Buat query untuk menambah stok ${main} dengan id tertentu sebanyak 5.`,
+            `Buat query untuk menghapus data ${transTable} dengan id tertentu.`,
+            `Buat query untuk menampilkan ${main} yang harganya di atas rata-rata harga semua ${main}.`
+        ];
+        return soal;
+    }
+
     // ================= FUNGSI MENGISI DROPDOWN =================
     function isiDropdown() {
         const kelas1 = document.getElementById('kelas1');
@@ -685,14 +825,14 @@
     // ================= FUNGSI SAAT PILIH SISWA =================
     window.pilihSiswa = function(kelasId) {
         const select = document.getElementById(kelasId);
-        const idx = select.value;
-        if (idx === "") {
+        const idx = parseInt(select.value);
+        if (isNaN(idx)) {
             alert("Pilih nama siswa terlebih dahulu!");
             return;
         }
         const siswa = siswaList[idx];
-        const themeIndex = Math.floor(idx / 3);  // 0-14, setiap 3 siswa mendapat tema sama
-        const varianIndex = idx % 3;             // 0,1,2
+        const themeIndex = Math.floor(idx / 3) % 15; // 0-14, setiap 3 siswa tema sama, berulang
+        const varianIndex = idx % 3; // 0,1,2
         const theme = themes[themeIndex];
         const variant = theme.variants[varianIndex];
         const variantLetter = String.fromCharCode(65 + varianIndex);
@@ -724,8 +864,28 @@
         });
         document.getElementById('tabelContainer').innerHTML = html;
 
+        // Generate soal
+        const soalArray = generateSoal(theme);
+        const soalList = document.getElementById('soalList');
+        soalList.innerHTML = '';
+        soalArray.forEach((teks, i) => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = teks;
+            soalList.appendChild(li);
+        });
+
         document.getElementById('areaSoal').style.display = 'block';
         window.scrollTo({ top: document.getElementById('areaSoal').offsetTop - 20, behavior: 'smooth' });
+    };
+
+    // ================= FUNGSI RESET (BACK HOME) =================
+    window.resetHome = function() {
+        document.getElementById('areaSoal').style.display = 'none';
+        document.getElementById('kelas1').value = '';
+        document.getElementById('kelas2').value = '';
+        document.getElementById('kelas3').value = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // ================= FUNGSI CETAK PDF =================
@@ -735,14 +895,16 @@
         const temaVarian = document.getElementById('temaVarian').textContent;
         const tabelHTML = document.getElementById('tabelContainer').innerHTML;
 
-        // Ambil soal dan tugas poster dari HTML yang sudah ada
-        const soalList = document.querySelectorAll('#areaSoal .list-group-item');
-        let soalText = '';
-        soalList.forEach((item, index) => {
-            soalText += `${index+1}. ${item.textContent}\n`;
+        // Ambil soal
+        const soalItems = document.querySelectorAll('#soalList .list-group-item');
+        let soalList = '';
+        soalItems.forEach((item, index) => {
+            soalList += `<li>${item.textContent}</li>`;
         });
 
-        const posterHTML = document.querySelector('.alert-warning').innerHTML;
+        // Ambil instruksi pengumpulan dan poster
+        const instruksiHTML = document.querySelector('.instruksi').outerHTML;
+        const posterHTML = document.querySelector('.alert-warning').outerHTML;
 
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
@@ -756,6 +918,7 @@
                     th { background-color: #f2f2f2; }
                     .header { margin-bottom: 30px; border-bottom: 2px solid #0d6efd; padding-bottom: 10px; }
                     .tugas-tambahan { background: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 20px; }
+                    .instruksi { background: #e7f5ff; padding: 15px; border-left: 5px solid #0d6efd; border-radius: 10px; margin: 20px 0; }
                 </style>
             </head>
             <body>
@@ -767,13 +930,9 @@
                 </div>
                 ${tabelHTML}
                 <h4>Soal SQL (kerjakan semua)</h4>
-                <ol>
-                    ${Array.from(soalList).map(item => `<li>${item.textContent}</li>`).join('')}
-                </ol>
-                <div class="tugas-tambahan">
-                    <h4>Tugas Tambahan: Infografis / Poster Edukasi</h4>
-                    ${document.querySelector('.alert-warning div').innerHTML}
-                </div>
+                <ol>${soalList}</ol>
+                ${instruksiHTML}
+                ${posterHTML}
                 <p style="margin-top: 30px;"><em>Dokumen ini sah sebagai bukti tugas individu.</em></p>
             </body>
             </html>
